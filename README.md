@@ -6,7 +6,7 @@ This is an example application for [TensorFlow Lite](https://tensorflow.org/lite
 on Android. It uses
 [Image classification]
 to continuously classify Cars it sees from the device's back camera.
-Inference is performed using the TensorFlow Lite Java API.For now due to some issue this only claasify into five classes
+Inference is performed using the TensorFlow Lite Java API.For now due to some issue this only claasify into five classes <br>
 1.Manufacturer : BMW Make : model_10 <br>
 2.Logo : Audi <br>
 3.Logo : Chevrolet <br>
