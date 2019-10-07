@@ -1,0 +1,66 @@
+def targetFolder = "src/main/assets"
+//def modelFloatDownloadUrl = "http://download.tensorflow.org/models/mobilenet_v1_2018_02_22/mobilenet_v1_1.0_224.tgz"
+def modelFloatDownloadUrl ="C:/Users/Ravi/Desktop/project"
+def modelQuantDownloadUrl = "C:/Users/Ravi/Desktop/project/mobilenet_v1_1.0_224_quant.tgz"
+def localCacheFloat = "build/intermediates/mobilenet_v1_1.0_224.tgz/mobilenet_v1_1.0_224.tgz"
+def localCacheQuant = "build/intermediates/mobilenet_v1_1.0_224_quant.tgz/mobilenet_v1_1.0_224_quant.tgz"
+
+
+/*task downloadModelFloat(type: Copy) {
+    doFirst {
+        println "Downloading {modelFloatDownloadUrl}"
+    }
+    from "{modelFloatDownloadUrl}"
+    into ("{localCacheFloat}")
+}*/
+
+/*task downloadModelQuant(type: Copy) {
+    doFirst {
+        println "Downloading ${modelQuantDownloadUrl}"
+    }
+    from "${modelQuantDownloadUrl}"
+    into file("${localCacheQuant}")
+}*/
+
+task unzipModelFloat(type: Copy) {
+    doFirst {
+        println "Unzipping ${localCacheFloat}"
+    }
+    from tarTree("${localCacheFloat}")
+    into "${targetFolder}"
+}
+
+task unzipModelQuant(type: Copy) {
+    doFirst {
+        println "Unzipping ${localCacheQuant}"
+    }
+    from tarTree("${localCacheQuant}")
+    into "${targetFolder}"
+}
+
+task cleanUnusedFiles(type: Delete, dependsOn: ['unzipModelFloat', 'unzipModelQuant']) {
+    delete fileTree("${targetFolder}").matching {
+        include "*.pb"
+        include "*.ckpt.*"
+        include "*.pbtxt*"
+        include "*.quant_info.*"
+        include "*.meta"
+    }
+}
+
+class DownloadUrlTask extends DefaultTask {
+    @Input
+    String sourceUrl
+
+    @OutputFile
+    File target
+
+    @TaskAction
+    void download() {
+        ant.get(src: sourceUrl, dest: target)
+    }
+}
+
+preBuild.dependsOn unzipModelFloat
+preBuild.dependsOn unzipModelQuant
+preBuild.dependsOn cleanUnusedFiles

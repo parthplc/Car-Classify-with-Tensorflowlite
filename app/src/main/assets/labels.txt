@@ -1,0 +1,5 @@
+Manufacturer : BMW Make : model_10
+Logo : Audi
+Logo : Chevrolet
+Manufacturer: MarutiSuzuki Make : Swift
+Manufacturer: MarutiSuzuki Make : WagonR
