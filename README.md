@@ -1,6 +1,8 @@
 # TensorFlow Lite image classification Android example application
 
 ## Overview
+Here is a link to the blog on this repo
+https://medium.com/@parthplc/car-classification-with-tensorflowlite-ee1772f1d7de
 
 This is an example application for [TensorFlow Lite](https://tensorflow.org/lite)
 on Android. It uses
